@@ -8,7 +8,7 @@ interface DesktopIconProps {
   id: string;
   title: string;
   icon: string;
-  position: { x: number; y: number };
+  position: { x: number | string; y: number | string };
   windowTitle: string;
 }
 
@@ -18,7 +18,9 @@ export default function DesktopIcon({ id, title, icon, position, windowTitle }: 
 
   const handleDoubleClick = () => {
     playSound('click');
-    openWindow(id, windowTitle, { x: position.x + 20, y: position.y + 20 });
+    const windowX = typeof position.x === 'string' ? 100 : position.x + 20;
+    const windowY = typeof position.y === 'string' ? 100 : position.y + 20;
+    openWindow(id, windowTitle, { x: windowX, y: windowY });
   };
 
   const isActive = activeWindow === id;
@@ -29,8 +31,9 @@ export default function DesktopIcon({ id, title, icon, position, windowTitle }: 
         isActive ? 'bg-black bg-opacity-20' : 'hover:bg-black hover:bg-opacity-10'
       }`}
       style={{
-        left: position.x,
-        top: position.y,
+        left: typeof position.x === 'string' ? position.x : position.x + 'px',
+        top: typeof position.y === 'string' ? position.y : position.y + 'px',
+        transform: typeof position.x === 'string' ? 'translate(-50%, -50%)' : 'none',
         width: 80,
         height: 80,
       }}

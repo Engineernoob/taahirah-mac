@@ -23,16 +23,7 @@ export default function DesktopScreen() {
   const { windows, activeWindow } = useOSStore();
 
   const desktopIcons = [
-    { id: 'about', title: 'About Me', icon: '👤', windowTitle: 'About Me', position: { x: 50, y: 100 } },
-    { id: 'cue', title: 'Cue', icon: '🎙️', windowTitle: 'Cue – AI Interview Assistant', position: { x: 150, y: 100 } },
-    { id: 'fern', title: 'FERN', icon: '🌿', windowTitle: 'Full-Stack Engineering Reinforcement Navigator', position: { x: 250, y: 100 } },
-    { id: 'villacard', title: 'VillaCard', icon: '🏠', windowTitle: 'VillaCard – AI Concierge & Property Dashboard', position: { x: 350, y: 100 } },
-    { id: 'cortex', title: 'Cortex', icon: '🧠', windowTitle: 'Cortex – Local RAG Knowledge Workspace', position: { x: 450, y: 100 } },
-    { id: 'slowread', title: 'SlowRead', icon: '📖', windowTitle: 'SlowRead – Minimal Reading App', position: { x: 50, y: 200 } },
-    { id: 'pixelfin', title: 'Pixel Fin', icon: '💲', windowTitle: 'Pixel Fin – Pixel-Art Finance Tracker', position: { x: 150, y: 200 } },
-    { id: 'quantum', title: 'Quantum', icon: '⚛️', windowTitle: 'Quantum – Randomness Simulator', position: { x: 250, y: 200 } },
-    { id: 'notchpod', title: 'NotchPod', icon: '📼', windowTitle: 'NotchPod – Retro Music Player', position: { x: 350, y: 200 } },
-    { id: 'ada', title: 'Ada', icon: '🤖', windowTitle: 'Ada – Local AI Assistant', position: { x: 450, y: 200 } },
+    { id: 'mac', title: 'Macintosh', icon: '💾', windowTitle: 'Macintosh', position: { x: '50%', y: '50%' } },
   ];
 
   const getWindowContent = (id: string) => {
@@ -57,6 +48,8 @@ export default function DesktopScreen() {
         return <NotchPodWindow />;
       case 'ada':
         return <AdaWindow />;
+      case 'mac':
+        return <div className="p-4">Welcome to Macintosh</div>;
       default:
         return <div>Unknown window</div>;
     }

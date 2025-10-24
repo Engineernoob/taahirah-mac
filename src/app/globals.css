@@ -50,11 +50,10 @@ button, input, textarea {
 }
 
 .desktop-pattern {
-  background-color: #ffffff;
-  background-image: 
-    repeating-linear-gradient(0deg, #f0f0f0, #f0f0f0 1px, transparent 1px, transparent 20px),
-    repeating-linear-gradient(90deg, #f0f0f0, #f0f0f0 1px, transparent 1px, transparent 20px);
-  background-size: 20px 20px;
+  background-color: #c0c0c0;
+  background-image: url('/patterns/mac-pattern.png');
+  background-size: auto;
+  background-repeat: repeat;
 }
 
 .choose-area {
