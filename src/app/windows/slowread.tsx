@@ -1,14 +1,19 @@
-'use client';
+"use client";
 
 export default function SlowReadWindow() {
   return (
     <div className="p-4">
       <h2 className="text-lg font-bold mb-4">SlowRead – Minimal Reading App</h2>
       <div className="space-y-3 text-sm">
-        <p className="font-bold">Blinkist-inspired Next.js PWA with Hugging Face TTS summaries and bookshelf UI</p>
-        
+        <p className="font-bold">
+          Blinkist-inspired Next.js PWA with Hugging Face TTS summaries and
+          bookshelf UI
+        </p>
+
         <div className="bg-gray-100 p-3 border border-black">
-          <p className="mb-2">📚 <span className="font-bold">Reading Features:</span></p>
+          <p className="mb-2">
+            📚 <span className="font-bold">Reading Features:</span>
+          </p>
           <ul className="list-disc list-inside space-y-1 text-xs">
             <li>20-minute book summaries</li>
             <li>Text-to-speech with natural voice synthesis</li>

@@ -1,14 +1,18 @@
-'use client';
+"use client";
 
 export default function AdaWindow() {
   return (
     <div className="p-4">
       <h2 className="text-lg font-bold mb-4">Ada – Local AI Assistant</h2>
       <div className="space-y-3 text-sm">
-        <p className="font-bold">Personal LLM assistant with offline voice input and contextual memory</p>
-        
+        <p className="font-bold">
+          Personal LLM assistant with offline voice input and contextual memory
+        </p>
+
         <div className="bg-gray-100 p-3 border border-black">
-          <p className="mb-2">🤖 <span className="font-bold">AI Capabilities:</span></p>
+          <p className="mb-2">
+            🤖 <span className="font-bold">AI Capabilities:</span>
+          </p>
           <ul className="list-disc list-inside space-y-1 text-xs">
             <li>100% offline processing</li>
             <li>Voice input with Whisper.cpp</li>

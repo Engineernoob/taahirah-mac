@@ -1,14 +1,21 @@
-'use client';
+"use client";
 
 export default function PixelFinWindow() {
   return (
     <div className="p-4">
-      <h2 className="text-lg font-bold mb-4">Pixel Fin – Pixel-Art Finance Tracker</h2>
+      <h2 className="text-lg font-bold mb-4">
+        Pixel Fin – Pixel-Art Finance Tracker
+      </h2>
       <div className="space-y-3 text-sm">
-        <p className="font-bold">Manual budget tracker with pixel-art interface and one-tap expense logging</p>
-        
+        <p className="font-bold">
+          Manual budget tracker with pixel-art interface and one-tap expense
+          logging
+        </p>
+
         <div className="bg-gray-100 p-3 border border-black">
-          <p className="mb-2">💰 <span className="font-bold">Budget Management:</span></p>
+          <p className="mb-2">
+            💰 <span className="font-bold">Budget Management:</span>
+          </p>
           <ul className="list-disc list-inside space-y-1 text-xs">
             <li>Category-based expense tracking</li>
             <li>Monthly and yearly budget goals</li>

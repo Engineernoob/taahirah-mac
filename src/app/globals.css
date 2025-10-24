@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: 'Chicago';
-  src: url('/fonts/ChicagoFLF.woff') format('woff');
+  font-family: "Chicago";
+  src: url("/fonts/pixChicago.tff") format("tff");
   font-weight: normal;
   font-style: normal;
 }
@@ -31,15 +31,17 @@ body {
   padding: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Chicago', 'Arial', sans-serif;
+  font-family: "Chicago", "Arial", sans-serif;
   font-size: 12px;
   overflow: hidden;
   cursor: default;
   user-select: none;
 }
 
-button, input, textarea {
-  font-family: 'Chicago', 'Arial', sans-serif;
+button,
+input,
+textarea {
+  font-family: "Chicago", "Arial", sans-serif;
   font-size: 12px;
 }
 
@@ -51,7 +53,7 @@ button, input, textarea {
 
 .desktop-pattern {
   background-color: #c0c0c0;
-  background-image: url('/patterns/mac-pattern.png');
+  background-image: url("/patterns/mac-pattern.png");
   background-size: auto;
   background-repeat: repeat;
 }

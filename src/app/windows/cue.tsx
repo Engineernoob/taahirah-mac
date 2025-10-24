@@ -1,14 +1,18 @@
-'use client';
+"use client";
 
 export default function CueWindow() {
   return (
     <div className="p-4">
       <h2 className="text-lg font-bold mb-4">Cue – AI Interview Assistant</h2>
       <div className="space-y-3 text-sm">
-        <p className="font-bold">Privacy-focused AI copilot for coding interviews and meetings</p>
-        
+        <p className="font-bold">
+          Privacy-focused AI copilot for coding interviews and meetings
+        </p>
+
         <div className="bg-gray-100 p-3 border border-black">
-          <p className="mb-2">🎯 <span className="font-bold">Core Features:</span></p>
+          <p className="mb-2">
+            🎯 <span className="font-bold">Core Features:</span>
+          </p>
           <ul className="list-disc list-inside space-y-1 text-xs">
             <li>Runs locally - no data leaves your device</li>
             <li>Three modes: Candidate / Interviewer / Meeting</li>

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 export default function AboutWindow() {
   return (
@@ -6,7 +6,9 @@ export default function AboutWindow() {
       <h2 className="text-lg font-bold mb-4">About Me</h2>
       <div className="space-y-3 text-sm">
         <p>
-          Hi I'm Taahirah Denmark — a software engineer and AI builder crafting elegant, intelligent systems that blend design and technology.
+          Hi I&apos;m Taahirah Denmark — a software engineer and AI builder
+          crafting elegant, intelligent systems that blend design and
+          technology.
         </p>
         <div className="border-t border-b border-gray-300 py-2">
           <p className="font-bold">Expertise</p>
@@ -20,7 +22,8 @@ export default function AboutWindow() {
         <div>
           <p className="font-bold mb-1">Portfolio Highlights</p>
           <p className="text-xs">
-            Each icon on this desktop represents a real project I've built. Double-click any icon to explore that project in detail.
+            Each icon on this desktop represents a real project I&apos;ve built.
+            Double-click any icon to explore that project in detail.
           </p>
         </div>
       </div>

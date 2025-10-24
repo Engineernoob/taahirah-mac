@@ -1,14 +1,21 @@
-'use client';
+"use client";
 
 export default function CortexWindow() {
   return (
     <div className="p-4">
-      <h2 className="text-lg font-bold mb-4">Cortex – Local RAG Knowledge Workspace</h2>
+      <h2 className="text-lg font-bold mb-4">
+        Cortex – Local RAG Knowledge Workspace
+      </h2>
       <div className="space-y-3 text-sm">
-        <p className="font-bold">Offline knowledge graph and retrieval system for AI-assisted note-taking</p>
-        
+        <p className="font-bold">
+          Offline knowledge graph and retrieval system for AI-assisted
+          note-taking
+        </p>
+
         <div className="bg-gray-100 p-3 border border-black">
-          <p className="mb-2">🧠 <span className="font-bold">Knowledge Management:</span></p>
+          <p className="mb-2">
+            🧠 <span className="font-bold">Knowledge Management:</span>
+          </p>
           <ul className="list-disc list-inside space-y-1 text-xs">
             <li>Document ingestion (PDF, Markdown, Web)</li>
             <li>Automatic knowledge graph construction</li>
