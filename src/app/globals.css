@@ -1,15 +1,18 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@font-face {
+  font-family: 'Chicago';
+  src: url('/fonts/ChicagoFLF.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+  --window-bg: #c0c0c0;
+  --border-color: #000000;
+  --shadow-color: #808080;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,8 +22,53 @@
   }
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
+  margin: 0;
+  padding: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Chicago', 'Arial', sans-serif;
+  font-size: 12px;
+  overflow: hidden;
+  cursor: default;
+  user-select: none;
+}
+
+button, input, textarea {
+  font-family: 'Chicago', 'Arial', sans-serif;
+  font-size: 12px;
+}
+
+.window {
+  background-color: var(--window-bg);
+  border: 1px solid var(--border-color);
+  box-shadow: 2px 2px 0 var(--shadow-color);
+}
+
+.desktop-pattern {
+  background-color: #ffffff;
+  background-image: 
+    repeating-linear-gradient(0deg, #f0f0f0, #f0f0f0 1px, transparent 1px, transparent 20px),
+    repeating-linear-gradient(90deg, #f0f0f0, #f0f0f0 1px, transparent 1px, transparent 20px);
+  background-size: 20px 20px;
+}
+
+.choose-area {
+  background-color: #000;
+}
+
+.choose-area-inner {
+  border: 1px dashed #fff;
+  margin: 1px;
+}
+
+/* Pixelated image rendering */
+.pixel-art {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
 }
