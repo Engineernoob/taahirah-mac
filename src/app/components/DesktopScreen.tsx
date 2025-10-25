@@ -17,12 +17,14 @@ import PixelFinWindow from '../windows/pixelfin';
 import QuantumWindow from '../windows/quantum';
 import NotchPodWindow from '../windows/notchpod';
 import AdaWindow from '../windows/ada';
+import GitHubWindow from '../windows/github';
 
 export default function DesktopScreen() {
   const { windows } = useOSStore();
 
   const desktopIcons = [
     { id: 'mac', title: 'Macintosh', icon: '💾', windowTitle: 'Macintosh', position: { x: '50%', y: '50%' } },
+    { id: 'github', title: 'GitHub', icon: '🔗', windowTitle: 'GitHub Repositories', position: { x: '30%', y: '30%' } },
   ];
 
   const getWindowContent = (id: string) => {
@@ -47,6 +49,8 @@ export default function DesktopScreen() {
         return <NotchPodWindow />;
       case 'ada':
         return <AdaWindow />;
+      case 'github':
+        return <GitHubWindow />;
       case 'mac':
         return <div className="p-4">Welcome to Macintosh</div>;
       default:
