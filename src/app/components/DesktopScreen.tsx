@@ -18,13 +18,16 @@ import QuantumWindow from '../windows/quantum';
 import NotchPodWindow from '../windows/notchpod';
 import AdaWindow from '../windows/ada';
 import GitHubWindow from '../windows/github';
+import ProjectsWindow from '../windows/projects';
 
 export default function DesktopScreen() {
   const { windows } = useOSStore();
 
   const desktopIcons = [
-    { id: 'mac', title: 'Macintosh', icon: '💾', windowTitle: 'Macintosh', position: { x: '50%', y: '50%' } },
-    { id: 'github', title: 'GitHub', icon: '🔗', windowTitle: 'GitHub Repositories', position: { x: '30%', y: '30%' } },
+    { id: 'mac', title: 'Macintosh', icon: '💾', windowTitle: 'Macintosh', position: { x: '15%', y: '20%' } },
+    { id: 'projects', title: 'Projects', icon: '📁', windowTitle: 'Projects Folder', position: { x: '30%', y: '20%' } },
+    { id: 'github', title: 'GitHub', icon: '🔗', windowTitle: 'GitHub Repositories', position: { x: '45%', y: '20%' } },
+    { id: 'about', title: 'About Me', icon: '👤', windowTitle: 'About Me', position: { x: '60%', y: '20%' } },
   ];
 
   const getWindowContent = (id: string) => {
@@ -51,6 +54,8 @@ export default function DesktopScreen() {
         return <AdaWindow />;
       case 'github':
         return <GitHubWindow />;
+      case 'projects':
+        return <ProjectsWindow />;
       case 'mac':
         return <div className="p-4">Welcome to Macintosh</div>;
       default:
