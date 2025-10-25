@@ -23,47 +23,51 @@ export default function ShutdownScreen() {
 
   return (
     <motion.div
-      className="fixed inset-0 bg-white flex flex-col items-center justify-center border-4 border-black"
+      className="fixed inset-0 bg-[#BFBFBF] flex flex-col items-center justify-center border-t-4 border-l-4 border-white border-b-4 border-r-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 1 }}
+      style={{ position: 'relative', overflow: 'hidden' }}
     >
-      <motion.svg
-        xmlns="http://www.w3.org/2000/svg"
+      <svg
         width="128"
         height="128"
         viewBox="0 0 64 64"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 2 }}
         className="mb-6"
+        shapeRendering="crispEdges"
       >
-        <rect width="64" height="64" fill="white" />
-        <g fill="black">
-          {/* Sad Mac face outline */}
-          <rect x="8" y="8" width="48" height="48" stroke="black" strokeWidth="2" fill="none" />
-          {/* Eyes */}
-          <rect x="18" y="22" width="6" height="6" />
-          <rect x="40" y="22" width="6" height="6" />
-          {/* Mouth */}
-          <rect x="20" y="42" width="24" height="4" />
-          <rect x="20" y="46" width="6" height="2" />
-          <rect x="38" y="46" width="6" height="2" />
-          {/* Nose */}
-          <rect x="30" y="34" width="4" height="4" />
-          {/* Eyebrows */}
-          <rect x="16" y="18" width="10" height="2" />
-          <rect x="38" y="18" width="10" height="2" />
-        </g>
-      </motion.svg>
+        <rect x="0" y="0" width="64" height="64" fill="#BFBFBF" stroke="black" strokeWidth="4" />
+        {/* Face outline */}
+        <rect x="4" y="4" width="56" height="56" fill="#BFBFBF" stroke="black" strokeWidth="4" />
+        {/* Eyes */}
+        <rect x="18" y="20" width="8" height="8" fill="black" />
+        <rect x="38" y="20" width="8" height="8" fill="black" />
+        {/* Mouth - simple black bar */}
+        <rect x="18" y="44" width="28" height="6" fill="black" />
+      </svg>
+      {/* Scanline overlay */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          pointerEvents: 'none',
+          background:
+            'repeating-linear-gradient(0deg, rgba(255,255,255,0.05), rgba(255,255,255,0.05) 1px, transparent 2px, transparent 3px)',
+          zIndex: 10,
+        }}
+      />
       <motion.p
-        className="text-black text-sm font-mono"
+        className="text-black font-bold"
+        style={{ fontFamily: '"Chicago", sans-serif', fontSize: '12px', zIndex: 20 }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 2 }}
       >
-        Taahirah-OS is shutting down…
+        It is now safe to turn off your computer.
       </motion.p>
     </motion.div>
   );

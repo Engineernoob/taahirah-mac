@@ -8,19 +8,32 @@ export default function Clock() {
   useEffect(() => {
     const timer = setInterval(() => {
       setTime(new Date());
-    }, 1000);
+    }, 30000);
 
     return () => clearInterval(timer);
   }, []);
 
   const formatTime = (date: Date) => {
-    const hours = date.getHours().toString().padStart(2, "0");
+    let hours = date.getHours();
     const minutes = date.getMinutes().toString().padStart(2, "0");
-    return `${hours}:${minutes}`;
+    const ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    return `${hours}:${minutes} ${ampm}`;
   };
 
   return (
-    <div className="text-white text-xs absolute right-2 top-0 leading-6">
+    <div
+      style={{
+        fontFamily: "'Chicago', monospace",
+        fontWeight: "bold",
+        fontSize: "12px",
+        color: "black",
+        backgroundColor: "white",
+        padding: "2px 6px",
+        userSelect: "none",
+      }}
+    >
       {formatTime(time)}
     </div>
   );

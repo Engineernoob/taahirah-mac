@@ -1,7 +1,7 @@
 // src/app/hooks/useSound.ts
 let sharedAudioCtx: AudioContext | null = null;
 
-export function useSound(volume: number) {
+export function useSound() {
   if (typeof window !== 'undefined' && !sharedAudioCtx) {
     sharedAudioCtx = new (window.AudioContext ||
       (window as unknown as { webkitAudioContext: typeof AudioContext })

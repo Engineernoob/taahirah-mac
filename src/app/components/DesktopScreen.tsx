@@ -4,7 +4,6 @@ import { useOSStore } from "../store/useOSStore";
 import Window from "./Window";
 import DesktopIcon from "./DesktopIcon";
 import MenuBar from "./MenuBar";
-import Clock from "./Clock";
 
 // Import window content components
 import AboutWindow from "../windows/about";
@@ -30,35 +29,35 @@ export default function DesktopScreen() {
       title: "Macintosh HD",
       iconId: "happy_mac",
       windowTitle: "Macintosh HD",
-      position: { x: "5%", y: "20%" },
+      position: { x: "4%", y: "18%" },
     },
     {
       id: "projects",
       title: "Projects",
       iconId: "folder",
       windowTitle: "Projects Folder",
-      position: { x: "20%", y: "20%" },
+      position: { x: "14%", y: "18%" },
     },
     {
       id: "github",
       title: "GitHub",
       iconId: "globe",
       windowTitle: "GitHub Repositories",
-      position: { x: "35%", y: "20%" },
+      position: { x: "24%", y: "18%" },
     },
     {
       id: "about",
       title: "About Me",
       iconId: "system_folder",
       windowTitle: "About Me",
-      position: { x: "50%", y: "20%" },
+      position: { x: "34%", y: "18%" },
     },
     {
       id: "trash",
       title: "Trash",
       iconId: "trash",
       windowTitle: "Trash",
-      position: { x: "90%", y: "70%" },
+      position: { x: "90%", y: "72%" },
     },
   ];
 
@@ -89,31 +88,36 @@ export default function DesktopScreen() {
       case "projects":
         return <ProjectsWindow />;
       case "mac":
-        return <div className="p-4 text-[10px]">Welcome to Macintosh.</div>;
+        return <div className="p-2 text-[10px]">Welcome to Macintosh.</div>;
       default:
-        return <div className="text-[10px] p-4">Unknown window</div>;
+        return <div className="text-[10px] p-2">Unknown window</div>;
     }
   };
 
   return (
     <div
-      className="relative h-screen w-full bg-[#E0E0E0] text-black"
-      style={{ fontFamily: '"Chicago", "Geneva", sans-serif' }}
+      className="relative h-screen w-full text-black"
+      style={{
+        fontFamily: '"Chicago", "Geneva", sans-serif',
+        fontSize: "10px",
+        backgroundImage: 'url("/patterns/mac-pattern.png")',
+        backgroundRepeat: "repeat",
+      }}
     >
       {/* 🧠 Menu Bar */}
-      <div className="fixed top-0 left-0 right-0 z-10">
+      <div className="fixed top-0 left-0 right-0 z-20" style={{ height: 22, boxShadow: "inset 0 -1px 0 #777, inset 0 1px 0 #fff" }}>
         <MenuBar />
-        <Clock />
       </div>
 
       {/* 🖥 Desktop */}
       <div
-        className="absolute top-8 bottom-0 left-0 right-0 select-none"
+        className="absolute left-0 right-0 bottom-0"
         style={{
-          backgroundImage:
-            'linear-gradient(to right, #bfbfbf 1px, transparent 1px), linear-gradient(to bottom, #bfbfbf 1px, transparent 1px)',
-          backgroundSize: '2px 2px',
-          border: 'inset 1px #999',
+          top: 22,
+          userSelect: "none",
+          paddingLeft: "4%",
+          paddingTop: "2%",
+          paddingBottom: "4%",
         }}
       >
         {/* 🗂 Desktop Icons */}
@@ -125,6 +129,7 @@ export default function DesktopScreen() {
             iconId={icon.iconId}
             position={icon.position}
             windowTitle={icon.windowTitle}
+            style={{ fontSize: "10px", lineHeight: "12px", marginBottom: "6px" }}
           />
         ))}
 
@@ -132,7 +137,18 @@ export default function DesktopScreen() {
         {windows
           .filter((w) => !w.isMinimized)
           .map((window) => (
-            <Window key={window.id} id={window.id} title={window.title}>
+            <Window
+              key={window.id}
+              id={window.id}
+              title={window.title}
+              style={{
+                boxShadow: "2px 2px 5px rgba(0,0,0,0.3)",
+                marginTop: "4px",
+                marginBottom: "4px",
+                zIndex: 15,
+              }}
+              preventOverlapWithMenubar={true}
+            >
               {getWindowContent(window.id)}
             </Window>
           ))}

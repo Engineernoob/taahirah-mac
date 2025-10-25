@@ -3,16 +3,25 @@
 import { motion, PanInfo } from "framer-motion";
 import { useRef, useState } from "react";
 import { useOSStore } from "../store/useOSStore";
-import { useSound } from "../hooks/useSound";
 
 interface WindowProps {
   id: string;
   title: string;
   icon?: string;
   children: React.ReactNode;
+  initialPosition?: { x: number; y: number };
+  initialSize?: { width: number; height: number };
+  style?: React.CSSProperties;
+  preventOverlapWithMenubar?: boolean;
 }
 
-export default function Window({ id, title, icon, children }: WindowProps) {
+export default function Window({
+  id,
+  title,
+  icon,
+  children,
+  style = {},
+}: WindowProps) {
   const {
     windows,
     activeWindow,
@@ -23,132 +32,143 @@ export default function Window({ id, title, icon, children }: WindowProps) {
     bringToFront,
   } = useOSStore();
 
-  const [volume, setVolume] = useState(0.5);
-  const { playSound } = useSound(volume);
-
-  const win = windows.find((w) => w.id === id);
+  const windowData = windows.find((w) => w.id === id);
   const [isResizing, setIsResizing] = useState(false);
   const windowRef = useRef<HTMLDivElement>(null);
 
-  if (!win) return null;
+  if (!windowData) return null;
 
   const isActive = activeWindow === id;
 
-  const handleDragEnd = (_: unknown, info: PanInfo) => {
-    const snapX = Math.round((win.position.x + info.offset.x) / 2) * 2;
-    const snapY = Math.round((win.position.y + info.offset.y) / 2) * 2;
-    updateWindowPosition(id, snapX, snapY);
+  const handleDragEnd = (
+    _: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) => {
+    updateWindowPosition(
+      id,
+      windowData.position.x + info.offset.x,
+      windowData.position.y + info.offset.y
+    );
   };
 
-  const handleClick = () => {
+  const handleWindowClick = () => {
     bringToFront(id);
     setActiveWindow(id);
-    playSound("click");
   };
+
+  const handleClose = () => closeWindow(id);
+  const handleMinimize = () => minimizeWindow(id);
 
   return (
     <motion.div
       ref={windowRef}
-      className="absolute select-none"
+      className="absolute bg-mac-gray select-none"
       style={{
-        x: win.position.x,
-        y: win.position.y,
-        width: win.size.width,
-        height: win.size.height,
-        zIndex: win.zIndex,
+        ...style,
+        width: windowData.size.width,
+        height: windowData.size.height,
+        x: windowData.position.x,
+        y: windowData.position.y,
+        zIndex: windowData.zIndex,
+        border: isActive ? "2px solid #000" : "2px solid #ccc",
+        boxShadow: isActive
+          ? `
+          inset 2px 2px 5px rgba(0,0,0,0.7),
+          inset -2px -2px 5px rgba(255,255,255,0.7),
+          1px 1px 0 #000
+        `
+          : `
+          inset 1px 1px 3px rgba(255,255,255,0.8),
+          inset -1px -1px 3px rgba(0,0,0,0.2),
+          1px 1px 0 #aaa
+        `,
       }}
       drag={!isResizing}
       dragMomentum={false}
+      dragElastic={0}
       onDragEnd={handleDragEnd}
-      onMouseDown={handleClick}
-      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      onClick={handleWindowClick}
+      initial={false}
+      animate={{
+        x: windowData.position.x,
+        y: windowData.position.y,
+        width: windowData.size.width,
+        height: windowData.size.height,
+      }}
+      transition={{ type: "spring", stiffness: 280, damping: 24 }}
     >
-      {/* Outer CRT-style border */}
+      {/* Title Bar */}
       <div
-        className="relative h-full w-full bg-[#ECECEC]"
+        className={`flex items-center justify-between h-[18px] px-1 border-b ${
+          isActive
+            ? "border-black bg-black text-white"
+            : "border-gray-400 bg-gray-200 text-gray-600"
+        }`}
         style={{
-          border: "2px solid black",
-          boxShadow:
-            "2px 2px 0 #000, 1px 1px 0 #000, inset -1px -1px 0 #fff, inset 1px 1px 0 #808080",
+          fontFamily: "Chicago, monospace",
+          fontSize: "11px",
+          fontWeight: "bold",
+          letterSpacing: "-0.5px",
+        }}
+        onMouseDown={handleWindowClick}
+      >
+        <div className="flex items-center gap-1">
+          {/* Square control buttons */}
+          <button
+            onClick={handleClose}
+            aria-label="Close"
+            className={
+              isActive ? "w-2.5 h-2.5 bg-black" : "w-2.5 h-2.5 bg-gray-400"
+            }
+            style={{
+              border: isActive ? "1px solid #000" : "1px solid #aaa",
+              boxShadow: isActive
+                ? "inset 1px 1px 0 #fff, inset -1px -1px 0 #000"
+                : "inset 1px 1px 0 #ddd, inset -1px -1px 0 #888",
+            }}
+          ></button>
+          <button
+            onClick={handleMinimize}
+            aria-label="Minimize"
+            className={
+              isActive ? "w-2.5 h-2.5 bg-white" : "w-2.5 h-2.5 bg-gray-300"
+            }
+            style={{
+              border: isActive ? "1px solid #000" : "1px solid #aaa",
+              boxShadow: isActive
+                ? "inset 1px 1px 0 #fff, inset -1px -1px 0 #000"
+                : "inset 1px 1px 0 #ddd, inset -1px -1px 0 #888",
+            }}
+          ></button>
+          {icon && <span className="text-xs">{icon}</span>}
+          <span>{title}</span>
+        </div>
+      </div>
+
+      {/* Window Content */}
+      <div
+        className="bg-white overflow-auto"
+        style={{
+          border: isActive ? "1px inset #000" : "1px inset #ccc",
+          height: "calc(100% - 18px)",
+          boxShadow: isActive ? "inset 1px 1px 0 #fff" : "inset 1px 1px 0 #eee",
         }}
       >
-        {/* Title bar */}
-        <div
-          className="flex items-center justify-between px-1 h-[18px] border-b border-black"
-          style={{
-            backgroundColor: isActive ? "#BEBEBE" : "#D0D0D0",
-            fontFamily: '"Chicago", "Geneva", sans-serif',
-            fontSize: "11px",
-            fontWeight: "bold",
-            color: "#000",
-            letterSpacing: "0.4px",
-          }}
-        >
-          <div className="flex items-center gap-1">
-            {/* Square buttons */}
-            <div
-              onClick={() => {
-                closeWindow(id);
-                playSound("shutdown");
-              }}
-              className="w-2.5 h-2.5 bg-black hover:bg-white border border-black cursor-pointer"
-              title="Close"
-            ></div>
-            <div
-              onClick={() => {
-                minimizeWindow(id);
-                playSound("minimize");
-              }}
-              className="w-2.5 h-2.5 bg-black hover:bg-white border border-black cursor-pointer"
-              title="Minimize"
-            ></div>
-            {icon && <span className="ml-1">{icon}</span>}
-            <span className="ml-1">{title.toUpperCase()}</span>
-          </div>
-          <input
-            type="range"
-            min={0}
-            max={1}
-            step={0.01}
-            value={volume}
-            onChange={(e) => setVolume(parseFloat(e.target.value))}
-            title="Volume"
-            className="w-20 cursor-pointer"
-            style={{
-              appearance: "none",
-              backgroundColor: "#D0D0D0",
-              border: "1px solid black",
-              height: "10px",
-              borderRadius: "2px",
-            }}
-          />
-        </div>
-
-        {/* Content area */}
-        <div
-          className="relative bg-white overflow-auto p-2"
-          style={{
-            height: `calc(100% - 18px)`,
-            borderTop: "1px solid #000",
-            boxShadow: "inset 1px 1px 0 #808080, inset -1px -1px 0 #fff",
-            fontFamily: '"Chicago", "Monaco", monospace',
-            fontSize: "11px",
-          }}
-        >
-          {children}
-        </div>
-
-        {/* Resize grip */}
-        <div
-          onMouseDown={() => setIsResizing(true)}
-          onMouseUp={() => setIsResizing(false)}
-          className="absolute bottom-0 right-0 w-3 h-3 border-t border-l border-black cursor-se-resize"
-          style={{
-            background:
-              "repeating-linear-gradient(135deg, #000 0, #000 1px, transparent 1px, transparent 2px)",
-          }}
-        ></div>
+        {children}
       </div>
+
+      {/* Resize Handle */}
+      <div
+        className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize"
+        style={{
+          borderRight: "1px solid #000",
+          borderBottom: "1px solid #000",
+        }}
+        onMouseDown={(e) => {
+          e.preventDefault();
+          setIsResizing(true);
+        }}
+      />
     </motion.div>
   );
 }
