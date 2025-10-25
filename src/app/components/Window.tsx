@@ -3,6 +3,7 @@
 import { motion, PanInfo } from "framer-motion";
 import { useRef, useState } from "react";
 import { useOSStore } from "../store/useOSStore";
+import { useSound } from "../hooks/useSound";
 
 interface WindowProps {
   id: string;
@@ -22,6 +23,9 @@ export default function Window({ id, title, icon, children }: WindowProps) {
     bringToFront,
   } = useOSStore();
 
+  const [volume, setVolume] = useState(0.5);
+  const { playSound } = useSound(volume);
+
   const win = windows.find((w) => w.id === id);
   const [isResizing, setIsResizing] = useState(false);
   const windowRef = useRef<HTMLDivElement>(null);
@@ -39,6 +43,7 @@ export default function Window({ id, title, icon, children }: WindowProps) {
   const handleClick = () => {
     bringToFront(id);
     setActiveWindow(id);
+    playSound("click");
   };
 
   return (
@@ -82,18 +87,41 @@ export default function Window({ id, title, icon, children }: WindowProps) {
           <div className="flex items-center gap-1">
             {/* Square buttons */}
             <div
-              onClick={() => closeWindow(id)}
+              onClick={() => {
+                closeWindow(id);
+                playSound("shutdown");
+              }}
               className="w-2.5 h-2.5 bg-black hover:bg-white border border-black cursor-pointer"
               title="Close"
             ></div>
             <div
-              onClick={() => minimizeWindow(id)}
+              onClick={() => {
+                minimizeWindow(id);
+                playSound("minimize");
+              }}
               className="w-2.5 h-2.5 bg-black hover:bg-white border border-black cursor-pointer"
               title="Minimize"
             ></div>
             {icon && <span className="ml-1">{icon}</span>}
             <span className="ml-1">{title.toUpperCase()}</span>
           </div>
+          <input
+            type="range"
+            min={0}
+            max={1}
+            step={0.01}
+            value={volume}
+            onChange={(e) => setVolume(parseFloat(e.target.value))}
+            title="Volume"
+            className="w-20 cursor-pointer"
+            style={{
+              appearance: "none",
+              backgroundColor: "#D0D0D0",
+              border: "1px solid black",
+              height: "10px",
+              borderRadius: "2px",
+            }}
+          />
         </div>
 
         {/* Content area */}

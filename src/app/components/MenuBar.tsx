@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useOSStore } from "../store/useOSStore";
 import Image from "next/image";
+import { useSound } from "../hooks/useSound";
 
 interface MenuItem {
   label: string;
@@ -13,43 +14,59 @@ interface MenuItem {
 export default function MenuBar() {
   const { openWindow, setBootState } = useOSStore();
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [volume, setVolume] = useState(0.5);
+  const { playSound } = useSound(volume);
 
   const toggleMenu = (menu: string) => {
-    setActiveMenu(activeMenu === menu ? null : menu);
+    const newActiveMenu = activeMenu === menu ? null : menu;
+    setActiveMenu(newActiveMenu);
+    if (newActiveMenu) {
+      playSound("click");
+    }
   };
 
   const handleAboutClick = () => {
+    playSound("notify");
     openWindow("about", "About Me");
     setActiveMenu(null);
   };
 
   const handleShutdown = () => {
+    playSound("shutdown");
     setBootState("shutdown");
     setActiveMenu(null);
   };
 
+  const handleOtherMenuItemClick = (action?: () => void) => {
+    playSound("click");
+    if (action) {
+      action();
+    }
+    setActiveMenu(null);
+  };
+
   const fileMenuItems: MenuItem[] = [
-    { label: "New Folder" },
-    { label: "Open" },
-    { label: "Print" },
+    { label: "New Folder", action: () => handleOtherMenuItemClick() },
+    { label: "Open", action: () => handleOtherMenuItemClick() },
+    { label: "Print", action: () => handleOtherMenuItemClick() },
     { label: "-" },
     { label: "Quit", action: handleShutdown },
   ];
 
   const editMenuItems: MenuItem[] = [
-    { label: "Undo" },
-    { label: "Cut" },
-    { label: "Copy" },
-    { label: "Paste" },
-    { label: "Clear" },
-    { label: "Select All" },
+    { label: "Undo", action: () => handleOtherMenuItemClick() },
+    { label: "Cut", action: () => handleOtherMenuItemClick() },
+    { label: "Copy", action: () => handleOtherMenuItemClick() },
+    { label: "Paste", action: () => handleOtherMenuItemClick() },
+    { label: "Clear", action: () => handleOtherMenuItemClick() },
+    { label: "Select All", action: () => handleOtherMenuItemClick() },
   ];
 
   const viewMenuItems: MenuItem[] = [
-    { label: "by Icon" },
-    { label: "by Name" },
-    { label: "by Date" },
-    { label: "by Size" },
+    { label: "by Icon", action: () => handleOtherMenuItemClick() },
+    { label: "by Name", action: () => handleOtherMenuItemClick() },
+    { label: "by Date", action: () => handleOtherMenuItemClick() },
+    { label: "by Size", action: () => handleOtherMenuItemClick() },
   ];
 
   const renderMenu = (items: MenuItem[]) => (
@@ -83,8 +100,7 @@ export default function MenuBar() {
         backgroundColor: "#e0e0e0",
         fontFamily: "'Chicago', 'W95', sans-serif",
         letterSpacing: "-0.5px",
-        boxShadow:
-          "inset 0 1px 0 #ffffff, inset 0 -1px 0 #b0b0b0",
+        boxShadow: "inset 0 1px 0 #ffffff, inset 0 -1px 0 #b0b0b0",
       }}
     >
       {/* Apple Logo */}
@@ -180,8 +196,29 @@ export default function MenuBar() {
         )}
       </div>
 
+      {/* Volume Slider */}
+      <div className="ml-auto mr-3 flex items-center">
+        <input
+          type="range"
+          min={0}
+          max={1}
+          step={0.01}
+          value={volume}
+          onChange={(e) => setVolume(parseFloat(e.target.value))}
+          className="h-1 w-20 cursor-pointer accent-black bg-gray-300"
+          aria-label="Volume"
+          style={{
+            WebkitAppearance: "none",
+            appearance: "none",
+            backgroundColor: "#c0c0c0",
+            height: "4px",
+            borderRadius: "2px",
+          }}
+        />
+      </div>
+
       {/* Clock Placeholder */}
-      <div className="ml-auto mr-3 text-[10px] tracking-tight font-bold font-[Chicago,W95]">
+      <div className="mr-3 text-[10px] tracking-tight font-bold font-[Chicago,W95]">
         9:41 AM
       </div>
     </div>
