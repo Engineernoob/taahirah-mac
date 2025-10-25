@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, PanInfo } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useOSStore } from '../store/useOSStore';
 
 interface WindowProps {
@@ -17,23 +17,20 @@ export default function Window({
   id, 
   title, 
   icon, 
-  children, 
-  initialPosition = { x: 100, y: 100 },
-  initialSize = { width: 400, height: 300 }
+  children 
 }: WindowProps) {
   const {
     windows,
     activeWindow,
     closeWindow,
+    minimizeWindow,
     updateWindowPosition,
-    updateWindowSize,
     setActiveWindow,
     bringToFront
   } = useOSStore();
 
   const window = windows.find(w => w.id === id);
   const [isResizing, setIsResizing] = useState(false);
-  const [resizeDirection, setResizeDirection] = useState('');
   const windowRef = useRef<HTMLDivElement>(null);
 
   if (!window) return null;
@@ -54,65 +51,14 @@ export default function Window({
   };
 
   const handleMinimize = () => {
-    // Implement minimize functionality
-    closeWindow(id);
+    minimizeWindow(id);
   };
 
-  const handleResizeStart = (direction: string) => (e: React.MouseEvent) => {
+  const handleResizeStart = () => (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setIsResizing(true);
-    setResizeDirection(direction);
   };
-
-  useEffect(() => {
-    if (isResizing) {
-      const handleMouseMove = (e: MouseEvent) => {
-        if (!windowRef.current) return;
-        
-        const rect = windowRef.current.getBoundingClientRect();
-        let newWidth = window.size.width;
-        let newHeight = window.size.height;
-        let newX = window.position.x;
-        let newY = window.position.y;
-
-        if (resizeDirection.includes('right')) {
-          newWidth = e.clientX - rect.left;
-        }
-        if (resizeDirection.includes('left')) {
-          const delta = rect.right - e.clientX;
-          newWidth = rect.right - e.clientX;
-          newX = window.position.x + (rect.width - newWidth);
-        }
-        if (resizeDirection.includes('bottom')) {
-          newHeight = e.clientY - rect.top;
-        }
-        if (resizeDirection.includes('top')) {
-          const delta = rect.bottom - e.clientY;
-          newHeight = rect.bottom - e.clientY;
-          newY = window.position.y + (rect.height - newHeight);
-        }
-
-        updateWindowSize(id, Math.max(200, newWidth), Math.max(150, newHeight));
-        if (newX !== window.position.x || newY !== window.position.y) {
-          updateWindowPosition(id, newX, newY);
-        }
-      };
-
-      const handleMouseUp = () => {
-        setIsResizing(false);
-        setResizeDirection('');
-      };
-
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-
-      return () => {
-        document.removeEventListener('mousemove', handleMouseMove);
-        document.removeEventListener('mouseup', handleMouseUp);
-      };
-    }
-  }, [isResizing, resizeDirection, id, window.size.width, window.size.height, window.position.x, window.position.y, updateWindowSize, updateWindowPosition]);
 
   return (
     <motion.div
@@ -169,7 +115,7 @@ export default function Window({
       {/* Resize Handles */}
       <div
         className="absolute top-0 left-0 w-2 h-2 cursor-nw-resize"
-        onMouseDown={handleResizeStart('top-left')}
+        onMouseDown={handleResizeStart()}
       />
       <div
         className="absolute top-0 right-0 w-2 h-2 cursor-ne-resize"

@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useOSStore } from '../store/useOSStore';
 import Window from './Window';
 import DesktopIcon from './DesktopIcon';
@@ -20,7 +19,7 @@ import NotchPodWindow from '../windows/notchpod';
 import AdaWindow from '../windows/ada';
 
 export default function DesktopScreen() {
-  const { windows, activeWindow } = useOSStore();
+  const { windows } = useOSStore();
 
   const desktopIcons = [
     { id: 'mac', title: 'Macintosh', icon: '💾', windowTitle: 'Macintosh', position: { x: '50%', y: '50%' } },
@@ -78,7 +77,7 @@ export default function DesktopScreen() {
         ))}
 
         {/* Windows */}
-        {windows.map((window) => (
+        {windows.filter(w => !w.isMinimized).map((window) => (
           <Window
             key={window.id}
             id={window.id}

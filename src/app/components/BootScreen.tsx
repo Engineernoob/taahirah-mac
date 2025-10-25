@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { useEffect } from 'react';
-import { useOSStore } from '../store/useOSStore';
-import { useSound } from '../hooks/useSound';
+import { motion } from "framer-motion";
+import { useEffect } from "react";
+import { useOSStore } from "../store/useOSStore";
+import { useSound } from "../hooks/useSound";
 
 export default function BootScreen() {
-  const setBootState = useOSStore(state => state.setBootState);
+  const setBootState = useOSStore((state) => state.setBootState);
   const { playSound } = useSound();
 
   useEffect(() => {
     // Play boot sound
-    playSound('boot');
-    
+    playSound("boot");
+
     const timer = setTimeout(() => {
-      setBootState('desktop');
+      setBootState("desktop");
     }, 3000);
 
     return () => clearTimeout(timer);
@@ -35,7 +35,12 @@ export default function BootScreen() {
         transition={{ delay: 0.5, duration: 0.8 }}
       >
         <div className="mb-8">
-          <svg width="120" height="120" viewBox="0 0 120 120" className="mx-auto">
+          <svg
+            width="120"
+            height="120"
+            viewBox="0 0 120 120"
+            className="mx-auto"
+          >
             <motion.rect
               x="10"
               y="10"
@@ -80,7 +85,9 @@ export default function BootScreen() {
             />
           </svg>
         </div>
-        <h1 className="text-white text-2xl mb-4 font-bold">Welcome to Taahirah-OS</h1>
+        <h1 className="text-white text-2xl mb-4 font-bold">
+          Welcome to Taahirah-OS
+        </h1>
         <motion.div
           className="flex justify-center space-x-1"
           initial={{ opacity: 0 }}

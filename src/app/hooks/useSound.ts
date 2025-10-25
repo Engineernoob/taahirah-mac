@@ -2,7 +2,7 @@ export function useSound() {
   const playSound = (soundType: 'boot' | 'click' | 'shutdown') => {
     // For now, we'll create sound effects using Web Audio API
     // This creates simple retro mac-like sounds
-    const audioContext = typeof window !== 'undefined' ? new (window.AudioContext || (window as any).webkitAudioContext)() : null;
+    const audioContext = typeof window !== 'undefined' ? new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)() : null;
     
     if (!audioContext) return;
 
