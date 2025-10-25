@@ -2,44 +2,49 @@
 
 export default function CueWindow() {
   return (
-    <div className="p-4">
-      <h2 className="text-lg font-bold mb-4">Cue – AI Interview Assistant</h2>
-      <div className="space-y-3 text-sm">
-        <p className="font-bold">
-          Privacy-focused AI copilot for coding interviews and meetings
+    <div
+      className="p-3 text-[12px] leading-3.5 text-black bg-[#E5E5E5]"
+      style={{ fontFamily: "Chicago, sans-serif" }}
+    >
+      <div className="border border-black p-2 mb-2 bg-white">
+        <h2 className="font-bold text-center mb-1">
+          Cue – AI Interview Assistant
+        </h2>
+        <p>
+          Cue is a local AI-powered assistant for coding interviews and
+          meetings. It provides real-time feedback, transcription, and
+          contextual insights — all processed entirely on your device.
         </p>
+      </div>
 
-        <div className="bg-gray-100 p-3 border border-black">
-          <p className="mb-2">
-            🎯 <span className="font-bold">Core Features:</span>
-          </p>
-          <ul className="list-disc list-inside space-y-1 text-xs">
-            <li>Runs locally - no data leaves your device</li>
-            <li>Three modes: Candidate / Interviewer / Meeting</li>
-            <li>Real-time transcription and analysis</li>
-            <li>Contextual suggestions and feedback</li>
-          </ul>
-        </div>
+      <div className="border border-black p-2 mb-2 bg-white">
+        <p className="font-bold underline mb-1">Core Features</p>
+        <ul className="list-disc list-inside">
+          <li>Fully offline — no data leaves your device</li>
+          <li>Three distinct modes: Candidate, Interviewer, and Meeting</li>
+          <li>Real-time speech transcription and summarization</li>
+          <li>Instant technical feedback and question generation</li>
+        </ul>
+      </div>
 
-        <div>
-          <p className="font-bold mb-1">⚙️ Technology Stack</p>
-          <div className="bg-gray-100 p-2 border border-black text-xs">
-            <p>• Frontend: Next.js + React + TypeScript</p>
-            <p>• Audio Processing: Whisper API</p>
-            <p>• Desktop App: Tauri (Rust backend)</p>
-            <p>• AI: Custom fine-tuned models</p>
-          </div>
-        </div>
+      <div className="border border-black p-2 mb-2 bg-white">
+        <p className="font-bold underline mb-1">Technology Stack</p>
+        <ul className="list-disc list-inside">
+          <li>Frontend: Next.js + React + TypeScript</li>
+          <li>Audio Pipeline: Whisper.cpp for local transcription</li>
+          <li>Desktop Runtime: Tauri with Rust backend</li>
+          <li>AI Layer: Fine-tuned local LLMs (Ollama models)</li>
+        </ul>
+      </div>
 
-        <div>
-          <p className="font-bold mb-1">🛠️ Key Components</p>
-          <ul className="list-disc list-inside space-y-1 text-xs">
-            <li>Voice-to-text processing pipeline</li>
-            <li>Real-time code analysis</li>
-            <li>Smart question generation</li>
-            <li>Interview structure and timing</li>
-          </ul>
-        </div>
+      <div className="border border-black p-2 bg-white">
+        <p className="font-bold underline mb-1">System Components</p>
+        <ul className="list-disc list-inside">
+          <li>Voice-to-text processing loop</li>
+          <li>Real-time code evaluation module</li>
+          <li>Question generation and contextual hints</li>
+          <li>Interview analytics dashboard</li>
+        </ul>
       </div>
     </div>
   );

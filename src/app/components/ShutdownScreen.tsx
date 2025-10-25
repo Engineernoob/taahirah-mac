@@ -23,61 +23,48 @@ export default function ShutdownScreen() {
 
   return (
     <motion.div
-      className="fixed inset-0 bg-black flex items-center justify-center"
+      className="fixed inset-0 bg-white flex flex-col items-center justify-center border-4 border-black"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 1 }}
     >
-      <motion.div
-        className="text-center"
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.5, duration: 0.8 }}
+      <motion.svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="128"
+        height="128"
+        viewBox="0 0 64 64"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 2 }}
+        className="mb-6"
       >
-        <div className="mb-8">
-          <motion.svg
-            width="80"
-            height="80"
-            viewBox="0 0 80 80"
-            className="mx-auto"
-            initial={{ rotate: 0 }}
-            animate={{ rotate: 360 }}
-            transition={{ duration: 2, repeat: 1, ease: "easeInOut" }}
-          >
-            <circle
-              cx="40"
-              cy="40"
-              r="35"
-              fill="none"
-              stroke="white"
-              strokeWidth="2"
-            />
-            <motion.path
-              d="M 40 20 L 40 45 L 55 50"
-              fill="none"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ delay: 1, duration: 1 }}
-            />
-          </motion.svg>
-        </div>
-        <h1 className="text-white text-xl mb-4 font-bold">Goodbye from Taahirah-OS</h1>
-        <motion.div
-          className="flex justify-center space-x-1"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 0.5 }}
-        >
-          <div className="w-2 h-2 bg-white rounded-full"></div>
-          <div className="w-2 h-2 bg-white rounded-full opacity-75"></div>
-          <div className="w-2 h-2 bg-white rounded-full opacity-50"></div>
-          <div className="w-2 h-2 bg-white rounded-full opacity-25"></div>
-        </motion.div>
-      </motion.div>
+        <rect width="64" height="64" fill="white" />
+        <g fill="black">
+          {/* Sad Mac face outline */}
+          <rect x="8" y="8" width="48" height="48" stroke="black" strokeWidth="2" fill="none" />
+          {/* Eyes */}
+          <rect x="18" y="22" width="6" height="6" />
+          <rect x="40" y="22" width="6" height="6" />
+          {/* Mouth */}
+          <rect x="20" y="42" width="24" height="4" />
+          <rect x="20" y="46" width="6" height="2" />
+          <rect x="38" y="46" width="6" height="2" />
+          {/* Nose */}
+          <rect x="30" y="34" width="4" height="4" />
+          {/* Eyebrows */}
+          <rect x="16" y="18" width="10" height="2" />
+          <rect x="38" y="18" width="10" height="2" />
+        </g>
+      </motion.svg>
+      <motion.p
+        className="text-black text-sm font-mono"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 2 }}
+      >
+        Taahirah-OS is shutting down…
+      </motion.p>
     </motion.div>
   );
 }

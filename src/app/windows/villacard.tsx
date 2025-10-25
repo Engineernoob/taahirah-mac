@@ -2,50 +2,54 @@
 
 export default function VillaCardWindow() {
   return (
-    <div className="p-4">
-      <h2 className="text-lg font-bold mb-4">
-        VillaCard – AI Concierge & Property Dashboard
-      </h2>
-      <div className="space-y-3 text-sm">
-        <p className="font-bold">
-          Next.js + Supabase platform for villa management, bookings, and
-          AI-based concierge support
+    <div
+      className="p-3 text-[12px] leading-3.5 text-black bg-[#E5E5E5]"
+      style={{ fontFamily: "Chicago, sans-serif" }}
+    >
+      <div className="border border-black p-2 mb-2 bg-white text-center">
+        <h2 className="font-bold text-[12px] mb-1">
+          VillaCard — AI Concierge & Property Dashboard
+        </h2>
+        <p className="text-[9px]">
+          Manage villas, bookings, and guests with intelligent automation.
         </p>
+      </div>
 
-        <div className="bg-gray-100 p-3 border border-black">
-          <p className="mb-2">
-            🏡 <span className="font-bold">Platform Features:</span>
-          </p>
-          <ul className="list-disc list-inside space-y-1 text-xs">
-            <li>Property listings with rich media galleries</li>
-            <li>Real-time booking calendar system</li>
-            <li>Automated pricing optimization</li>
-            <li>Guest communication hub</li>
-            <li>Analytics and revenue tracking</li>
-          </ul>
-        </div>
+      <div className="border border-black bg-white p-2 mb-2">
+        <h3 className="font-bold mb-1 text-[11px]">[*] Platform Features</h3>
+        <ul className="list-none text-[10px] pl-2 space-y-0.5">
+          <li>(•) Property listings with media galleries</li>
+          <li>(•) Real-time booking calendar system</li>
+          <li>(•) Automated pricing optimization</li>
+          <li>(•) Guest communication dashboard</li>
+          <li>(•) Revenue and analytics tracking</li>
+        </ul>
+      </div>
 
-        <div>
-          <p className="font-bold mb-1">🤖 AI Concierge Services</p>
-          <div className="bg-gray-100 p-2 border border-black text-xs">
-            <p>• 24/7 guest assistance via chat</p>
-            <p>• Local recommendations and activities</p>
-            <p>• Automated check-in/check-out processes</p>
-            <p>• Maintenance request triage</p>
-            <p>• Multi-language support (English/Spanish)</p>
-          </div>
-        </div>
+      <div className="border border-black bg-white p-2 mb-2">
+        <h3 className="font-bold mb-1 text-[11px]">[*] AI Concierge Services</h3>
+        <ul className="list-none text-[10px] pl-2 space-y-0.5">
+          <li>(•) 24/7 guest chat assistance</li>
+          <li>(•) Local recommendations and guides</li>
+          <li>(•) Automated check-in and check-out</li>
+          <li>(•) Maintenance request triage</li>
+          <li>(•) Multi-language support system</li>
+        </ul>
+      </div>
 
-        <div>
-          <p className="font-bold mb-1">🛠️ Technical Stack</p>
-          <ul className="list-disc list-inside space-y-1 text-xs">
-            <li>Frontend: Next.js 14 + Tailwind CSS</li>
-            <li>Backend: Supabase (PostgreSQL + Functions)</li>
-            <li>Authentication: Supabase Auth</li>
-            <li>Payments: Stripe Connect integration</li>
-            <li>Maps: Google Maps API</li>
-          </ul>
-        </div>
+      <div className="border border-black bg-white p-2">
+        <h3 className="font-bold mb-1 text-[11px]">[*] Technical Stack</h3>
+        <ul className="list-none text-[10px] pl-2 space-y-0.5">
+          <li>(•) Frontend — Next.js + Tailwind CSS</li>
+          <li>(•) Backend — Supabase (PostgreSQL + Functions)</li>
+          <li>(•) Authentication — Supabase Auth</li>
+          <li>(•) Payments — Stripe Connect</li>
+          <li>(•) Maps — Google Maps API</li>
+        </ul>
+      </div>
+
+      <div className="border-t border-black mt-2 pt-1 text-center text-[9px]">
+        <p>VillaCard — Automating hospitality with elegance.</p>
       </div>
     </div>
   );

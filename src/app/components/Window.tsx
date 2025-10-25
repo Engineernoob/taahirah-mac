@@ -1,24 +1,17 @@
-'use client';
+"use client";
 
-import { motion, PanInfo } from 'framer-motion';
-import { useRef, useState } from 'react';
-import { useOSStore } from '../store/useOSStore';
+import { motion, PanInfo } from "framer-motion";
+import { useRef, useState } from "react";
+import { useOSStore } from "../store/useOSStore";
 
 interface WindowProps {
   id: string;
   title: string;
   icon?: string;
   children: React.ReactNode;
-  initialPosition?: { x: number; y: number };
-  initialSize?: { width: number; height: number };
 }
 
-export default function Window({ 
-  id, 
-  title, 
-  icon, 
-  children 
-}: WindowProps) {
+export default function Window({ id, title, icon, children }: WindowProps) {
   const {
     windows,
     activeWindow,
@@ -26,125 +19,108 @@ export default function Window({
     minimizeWindow,
     updateWindowPosition,
     setActiveWindow,
-    bringToFront
+    bringToFront,
   } = useOSStore();
 
-  const window = windows.find(w => w.id === id);
+  const win = windows.find((w) => w.id === id);
   const [isResizing, setIsResizing] = useState(false);
   const windowRef = useRef<HTMLDivElement>(null);
 
-  if (!window) return null;
+  if (!win) return null;
 
   const isActive = activeWindow === id;
 
-  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    updateWindowPosition(id, window.position.x + info.offset.x, window.position.y + info.offset.y);
+  const handleDragEnd = (_: unknown, info: PanInfo) => {
+    const snapX = Math.round((win.position.x + info.offset.x) / 2) * 2;
+    const snapY = Math.round((win.position.y + info.offset.y) / 2) * 2;
+    updateWindowPosition(id, snapX, snapY);
   };
 
-  const handleWindowClick = () => {
+  const handleClick = () => {
     bringToFront(id);
     setActiveWindow(id);
-  };
-
-  const handleClose = () => {
-    closeWindow(id);
-  };
-
-  const handleMinimize = () => {
-    minimizeWindow(id);
-  };
-
-  const handleResizeStart = () => (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsResizing(true);
   };
 
   return (
     <motion.div
       ref={windowRef}
-      className={`window absolute ${isActive ? 'ring-2 ring-blue-600' : ''}`}
+      className="absolute select-none"
       style={{
-        width: window.size.width,
-        height: window.size.height,
-        x: window.position.x,
-        y: window.position.y,
-        zIndex: window.zIndex,
+        x: win.position.x,
+        y: win.position.y,
+        width: win.size.width,
+        height: win.size.height,
+        zIndex: win.zIndex,
       }}
       drag={!isResizing}
       dragMomentum={false}
-      dragElastic={0}
       onDragEnd={handleDragEnd}
-      onClick={handleWindowClick}
-      initial={false}
-      animate={{
-        x: window.position.x,
-        y: window.position.y,
-        width: window.size.width,
-        height: window.size.height,
-      }}
-      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      onMouseDown={handleClick}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
     >
-      {/* Window Title Bar */}
-      <div className="bg-black text-white px-2 py-1 flex items-center justify-between cursor-move">
-        <div className="flex items-center space-x-2">
-          {icon && <span className="text-xs">{icon}</span>}
-          <span className="text-white font-bold text-xs">{title}</span>
+      {/* Outer CRT-style border */}
+      <div
+        className="relative h-full w-full bg-[#ECECEC]"
+        style={{
+          border: "2px solid black",
+          boxShadow:
+            "2px 2px 0 #000, 1px 1px 0 #000, inset -1px -1px 0 #fff, inset 1px 1px 0 #808080",
+        }}
+      >
+        {/* Title bar */}
+        <div
+          className="flex items-center justify-between px-1 h-[18px] border-b border-black"
+          style={{
+            backgroundColor: isActive ? "#BEBEBE" : "#D0D0D0",
+            fontFamily: '"Chicago", "Geneva", sans-serif',
+            fontSize: "11px",
+            fontWeight: "bold",
+            color: "#000",
+            letterSpacing: "0.4px",
+          }}
+        >
+          <div className="flex items-center gap-1">
+            {/* Square buttons */}
+            <div
+              onClick={() => closeWindow(id)}
+              className="w-2.5 h-2.5 bg-black hover:bg-white border border-black cursor-pointer"
+              title="Close"
+            ></div>
+            <div
+              onClick={() => minimizeWindow(id)}
+              className="w-2.5 h-2.5 bg-black hover:bg-white border border-black cursor-pointer"
+              title="Minimize"
+            ></div>
+            {icon && <span className="ml-1">{icon}</span>}
+            <span className="ml-1">{title.toUpperCase()}</span>
+          </div>
         </div>
-        <div className="flex space-x-1">
-          <button
-            onClick={handleMinimize}
-            className="w-4 h-4 bg-black border border-white text-white text-xs flex items-center justify-center hover:bg-gray-800"
-          >
-            ▼
-          </button>
-          <button
-            onClick={handleClose}
-            className="w-4 h-4 bg-black border border-white text-white text-xs flex items-center justify-center hover:bg-gray-800"
-          >
-            ✕
-          </button>
+
+        {/* Content area */}
+        <div
+          className="relative bg-white overflow-auto p-2"
+          style={{
+            height: `calc(100% - 18px)`,
+            borderTop: "1px solid #000",
+            boxShadow: "inset 1px 1px 0 #808080, inset -1px -1px 0 #fff",
+            fontFamily: '"Chicago", "Monaco", monospace',
+            fontSize: "11px",
+          }}
+        >
+          {children}
         </div>
-      </div>
 
-      {/* Window Content */}
-      <div className="bg-white border-t border-black h-full overflow-auto">
-        {children}
+        {/* Resize grip */}
+        <div
+          onMouseDown={() => setIsResizing(true)}
+          onMouseUp={() => setIsResizing(false)}
+          className="absolute bottom-0 right-0 w-3 h-3 border-t border-l border-black cursor-se-resize"
+          style={{
+            background:
+              "repeating-linear-gradient(135deg, #000 0, #000 1px, transparent 1px, transparent 2px)",
+          }}
+        ></div>
       </div>
-
-      {/* Resize Handles */}
-      <div
-        className="absolute top-0 left-0 w-2 h-2 cursor-nw-resize"
-        onMouseDown={handleResizeStart()}
-      />
-      <div
-        className="absolute top-0 right-0 w-2 h-2 cursor-ne-resize"
-        onMouseDown={handleResizeStart('top-right')}
-      />
-      <div
-        className="absolute bottom-0 left-0 w-2 h-2 cursor-sw-resize"
-        onMouseDown={handleResizeStart('bottom-left')}
-      />
-      <div
-        className="absolute bottom-0 right-0 w-2 h-2 cursor-se-resize"
-        onMouseDown={handleResizeStart('bottom-right')}
-      />
-      <div
-        className="absolute top-0 left-2 right-2 h-1 cursor-n-resize"
-        onMouseDown={handleResizeStart('top')}
-      />
-      <div
-        className="absolute bottom-0 left-2 right-2 h-1 cursor-s-resize"
-        onMouseDown={handleResizeStart('bottom')}
-      />
-      <div
-        className="absolute top-2 left-0 bottom-2 w-1 cursor-w-resize"
-        onMouseDown={handleResizeStart('left')}
-      />
-      <div
-        className="absolute top-2 right-0 bottom-2 w-1 cursor-e-resize"
-        onMouseDown={handleResizeStart('right')}
-      />
     </motion.div>
   );
 }

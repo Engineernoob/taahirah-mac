@@ -2,30 +2,34 @@
 
 export default function AboutWindow() {
   return (
-    <div className="p-4">
-      <h2 className="text-lg font-bold mb-4">About Me</h2>
-      <div className="space-y-3 text-sm">
+    <div
+      className="p-3 text-[12px] leading-3.5 text-black bg-[#E5E5E5]"
+      style={{ fontFamily: "Chicago, sans-serif" }}
+    >
+      <div className="border border-black p-2 mb-2 bg-white">
+        <h2 className="font-bold text-center mb-1">About Taahirah Denmark</h2>
         <p>
-          Hi I&apos;m Taahirah Denmark — a software engineer and AI builder
-          crafting elegant, intelligent systems that blend design and
-          technology.
+          Software Engineer & AI Builder crafting intelligent systems that merge
+          art, design, and technology.
         </p>
-        <div className="border-t border-b border-gray-300 py-2">
-          <p className="font-bold">Expertise</p>
-          <ul className="list-disc list-inside mt-1">
-            <li>Full-stack development with Next.js & TypeScript</li>
-            <li>AI/ML integration and LLM applications</li>
-            <li>React, Node.js, and modern web technologies</li>
-            <li>UI/UX design with attention to user experience</li>
-          </ul>
-        </div>
-        <div>
-          <p className="font-bold mb-1">Portfolio Highlights</p>
-          <p className="text-xs">
-            Each icon on this desktop represents a real project I&apos;ve built.
-            Double-click any icon to explore that project in detail.
-          </p>
-        </div>
+      </div>
+
+      <div className="border border-black p-2 mb-2 bg-white">
+        <p className="font-bold underline mb-1">Expertise</p>
+        <ul className="list-disc list-inside">
+          <li>Full-stack development with Next.js & TypeScript</li>
+          <li>AI/ML & LLM-powered applications</li>
+          <li>React, Node.js, and modern web architecture</li>
+          <li>Pixel-perfect UI/UX with attention to interaction design</li>
+        </ul>
+      </div>
+
+      <div className="border border-black p-2 bg-white">
+        <p className="font-bold underline mb-1">Portfolio Highlights</p>
+        <p>
+          Each icon on the desktop represents a real project I’ve built.
+          Double-click an icon to explore that project in detail.
+        </p>
       </div>
     </div>
   );

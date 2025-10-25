@@ -7,7 +7,7 @@ import { useSound } from "../hooks/useSound";
 interface DesktopIconProps {
   id: string;
   title: string;
-  icon: string;
+  iconId: string;
   position: { x: number | string; y: number | string };
   windowTitle: string;
 }
@@ -15,7 +15,7 @@ interface DesktopIconProps {
 export default function DesktopIcon({
   id,
   title,
-  icon,
+  iconId,
   position,
   windowTitle,
 }: DesktopIconProps) {
@@ -33,10 +33,8 @@ export default function DesktopIcon({
 
   return (
     <motion.div
-      className={`absolute flex flex-col items-center cursor-pointer p-2 rounded ${
-        isActive
-          ? "bg-black bg-opacity-20"
-          : "hover:bg-black hover:bg-opacity-10"
+      className={`absolute flex flex-col items-center cursor-pointer select-none ${
+        isActive ? "bg-black bg-opacity-10" : "hover:bg-black hover:bg-opacity-5"
       }`}
       style={{
         left: typeof position.x === "string" ? position.x : position.x + "px",
@@ -50,8 +48,17 @@ export default function DesktopIcon({
       whileTap={{ scale: 0.95 }}
       onDoubleClick={handleDoubleClick}
     >
-      <div className="text-3xl mb-1 pixel-art">{icon}</div>
-      <div className="text-xs text-center leading-tight text-black text-shadow">
+      <svg
+        width="32"
+        height="32"
+        className="mb-1"
+        style={{
+          imageRendering: "pixelated",
+        }}
+      >
+        <use href={`/icons/macintosh-icons.svg#${iconId}`} />
+      </svg>
+      <div className="text-[10px] leading-tight text-center font-[w95font] text-black">
         {title}
       </div>
     </motion.div>

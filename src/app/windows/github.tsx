@@ -1,111 +1,94 @@
+"use client";
+
 export default function GitHubWindow() {
   const repositories = [
     {
-      name: 'fern',
-      description: 'A modern data visualization library',
-      url: 'https://github.com/taahirah/fern',
-      language: 'TypeScript',
-      stars: 149
+      name: "FERN",
+      description:
+        "Full-stack reinforcement learning agent for software systems.",
+      url: "https://github.com/Engineernoob/fern",
     },
     {
-      name: 'cortex',
-      description: 'AI-powered code analysis tool',
-      url: 'https://github.com/taahirah/cortex',
-      language: 'Python',
-      stars: 89
+      name: "Cortex",
+      description:
+        "Local RAG workspace for context-aware knowledge organization.",
+      url: "https://github.com/Engineernoob/cortex",
     },
     {
-      name: 'villacard',
-      description: 'Smart home automation system',
-      url: 'https://github.com/taahirah/villacard',
-      language: 'JavaScript',
-      stars: 234
+      name: "VillaCard",
+      description: "AI concierge and property management dashboard.",
+      url: "https://github.com/Engineernoob/villacard",
     },
     {
-      name: 'cue',
-      description: 'Real-time collaborative editing platform',
-      url: 'https://github.com/taahirah/cue',
-      language: 'Go',
-      stars: 567
+      name: "Cue",
+      description: "Offline AI copilot for coding interviews and meetings.",
+      url: "https://github.com/Engineernoob/cue",
     },
     {
-      name: 'slowread',
-      description: 'Speed reading comprehension app',
-      url: 'https://github.com/taahirah/slowread',
-      language: 'React',
-      stars: 123
+      name: "SlowRead",
+      description: "Minimal reading app for focused, intentional learning.",
+      url: "https://github.com/taahirah/slowread",
+    },
+
+    {
+      name: "Quantum",
+      description: "Quantum randomness experiment and visualization framework.",
+      url: "https://github.com/Engineernoob/quantum",
+      language: "Python",
+      stars: 0,
     },
     {
-      name: 'pixelfin',
-      description: 'Digital art creation suite',
-      url: 'https://github.com/taahirah/pixelfin',
-      language: 'WebGL',
-      stars: 456
+      name: "NotchPod",
+      description:
+        "Retro 3D cassette-style music player and mood playlist engine.",
+      url: "https://github.com/Engineernoob/notchpod",
     },
     {
-      name: 'quantum',
-      description: 'Quantum computing simulation framework',
-      url: 'https://github.com/taahirah/quantum',
-      language: 'Python',
-      stars: 789
+      name: "Ada",
+      description:
+        "AI assistant and model orchestrator built on local inference.",
+      url: "https://github.com/Engineernoob/ada",
+      language: "Python",
     },
-    {
-      name: 'notchpod',
-      description: 'Podcast management platform',
-      url: 'https://github.com/taahirah/notchpod',
-      language: 'Node.js',
-      stars: 345
-    },
-    {
-      name: 'ada',
-      description: 'Machine learning model optimizer',
-      url: 'https://github.com/taahirah/ada',
-      language: 'Python',
-      stars: 678
-    }
   ];
 
   const openRepo = (url: string) => {
-    window.open(url, '_blank');
+    window.open(url, "_blank");
   };
 
   return (
-    <div className="p-4 h-full overflow-auto">
-      <div className="mb-4">
-        <h2 className="text-lg font-bold mb-2">GitHub Repositories</h2>
-        <p className="text-sm text-gray-600">Click on any repository to view it on GitHub</p>
-      </div>
-      
-      <div className="space-y-3">
-        {repositories.map((repo) => (
-          <div
-            key={repo.name}
-            className="border-2 border-black p-3 hover:bg-gray-100 cursor-pointer transition-colors"
-            onClick={() => openRepo(repo.url)}
-          >
-            <div className="flex justify-between items-start">
-              <div className="flex-1">
-                <h3 className="font-bold text-sm mb-1">{repo.name}</h3>
-                <p className="text-xs text-gray-600 mb-2">{repo.description}</p>
-                <div className="flex items-center space-x-4 text-xs">
-                  <span className="bg-black text-white px-1 py-0.5">{repo.language}</span>
-                  <span className="flex items-center">
-                    ⭐ {repo.stars}
-                  </span>
-                </div>
-              </div>
-              <div className="ml-4">
-                <span className="text-xs text-blue-600 hover:text-blue-800">→</span>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      
-      <div className="mt-6 border-t-2 border-black pt-4">
-        <p className="text-xs text-gray-500">
-          Total repositories: {repositories.length}
+    <div
+      className="p-3 text-[12px] leading-3.5 text-black bg-[#E5E5E5] overflow-auto"
+      style={{ fontFamily: "Chicago, sans-serif" }}
+    >
+      <div className="border border-black p-2 mb-2 bg-white">
+        <h2 className="font-bold text-center mb-1">GitHub Repositories</h2>
+        <p className="text-[10px] text-gray-800 text-center">
+          Click a repository to open it in your browser.
         </p>
+      </div>
+
+      {repositories.map((repo) => (
+        <div
+          key={repo.name}
+          onClick={() => openRepo(repo.url)}
+          className="border border-black p-2 mb-2 bg-white cursor-pointer hover:bg-[#C0C0C0]"
+        >
+          <h3 className="font-bold text-[11px] mb-1">{repo.name}</h3>
+          <p className="text-[10px] mb-1">{repo.description}</p>
+          <div className="flex justify-between text-[10px]">
+            <span>
+              <strong>Lang:</strong> {repo.language}
+            </span>
+            <span>
+              <strong>★</strong> {repo.stars}
+            </span>
+          </div>
+        </div>
+      ))}
+
+      <div className="border-t border-black mt-3 pt-1 text-center text-[10px]">
+        Total Repositories: {repositories.length}
       </div>
     </div>
   );

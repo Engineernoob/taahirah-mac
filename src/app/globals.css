@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: "Chicago";
-  src: url("/fonts/pixChicago.tff") format("tff");
+  src: url("/fonts/pixChicago.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -10,15 +10,16 @@
 :root {
   --background: #ffffff;
   --foreground: #000000;
-  --window-bg: #c0c0c0;
+  --window-bg: #bfbfbf;
   --border-color: #000000;
   --shadow-color: #808080;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #000000;
+    --foreground: #ffffff;
+    --window-bg: #808080;
   }
 }
 
@@ -31,33 +32,124 @@ body {
   padding: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: "Chicago", "Arial", sans-serif;
+  font-family: "Chicago", "Geneva", "Monaco", monospace, sans-serif;
   font-size: 12px;
   overflow: hidden;
   cursor: default;
   user-select: none;
+  position: relative;
+}
+
+/* CRT pixel grid overlay */
+.crt-overlay {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 1px,
+      rgba(0, 0, 0, 0.15) 1px,
+      rgba(0, 0, 0, 0.15) 2px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 1px,
+      rgba(0, 0, 0, 0.15) 1px,
+      rgba(0, 0, 0, 0.15) 2px
+    );
+  z-index: 9999;
+  mix-blend-mode: multiply;
+}
+
+/* Additional Mac OS background colors */
+.bg-mac-beige {
+  background: #bfbfbf;
+}
+
+.bg-mac-gray {
+  background: var(--window-bg);
 }
 
 button,
 input,
 textarea {
-  font-family: "Chicago", "Arial", sans-serif;
+  font-family: "Chicago", "Geneva", "Monaco", monospace, sans-serif;
   font-size: 12px;
 }
 
+button {
+  border: 1px solid #000;
+  background: #bfbfbf;
+  box-shadow: inset -1px -1px 0 #808080, inset 1px 1px 0 #fff;
+  padding: 2px 6px;
+}
+
+button:active {
+  box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #fff;
+}
+
+/* Mac window border and bezel utilities */
+.mac-border {
+  border: 1px solid #000;
+  box-shadow: inset 1px 1px 0 #fff;
+  background-color: var(--window-bg);
+}
+
+.mac-bezel {
+  border: 1px solid #fff;
+  box-shadow: inset -1px -1px 0 #000;
+}
+
+/* Window styling to match System 1 */
 .window {
   background-color: var(--window-bg);
-  border: 1px solid var(--border-color);
-  box-shadow: 2px 2px 0 var(--shadow-color);
+  border: 2px solid #000;
+  box-shadow:
+    inset 1px 1px 0 #fff,
+    inset -1px -1px 0 #808080;
+  font-family: "Chicago", "Geneva", "Monaco", monospace, sans-serif;
 }
 
+/* Title bar styling for System 1 */
+.title-bar {
+  background: #fff;
+  border-bottom: 1px solid #000;
+  padding: 2px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 11px;
+  font-family: "Chicago", "Geneva", "Monaco", monospace, sans-serif;
+  color: #000;
+  user-select: none;
+}
+
+.title-bar.active {
+  background: #000;
+  color: #fff;
+}
+
+/* Desktop pattern refined for System 1 */
 .desktop-pattern {
-  background-color: #c0c0c0;
+  background-color: #bfbfbf;
   background-image: url("/patterns/mac-pattern.png");
-  background-size: auto;
   background-repeat: repeat;
+  background-size: 16px 16px;
+  image-rendering: pixelated;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #fff;
+  border-right: 1px solid #fff;
 }
 
+/* Choose area remains black with white dashed border */
 .choose-area {
   background-color: #000;
 }
@@ -72,4 +164,55 @@ textarea {
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
+}
+
+/* System 1 Scrollbars */
+.overflow-auto::-webkit-scrollbar {
+  width: 15px;
+  height: 15px;
+  background: #bfbfbf;
+}
+
+.overflow-auto::-webkit-scrollbar-track {
+  background: #bfbfbf;
+  border: 1px solid #000;
+  border-width: 1px 0 1px 1px;
+  box-shadow:
+    inset 1px 1px 0 #fff,
+    inset -1px -1px 0 #808080;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb {
+  background: #808080;
+  border: 1px solid #000;
+  border-width: 1px 1px 1px 0;
+  box-shadow:
+    inset -1px -1px 0 #fff,
+    inset 1px 1px 0 #000;
+  position: relative;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb:vertical {
+  background-image: repeating-linear-gradient(
+      45deg,
+      transparent 0,
+      transparent 2px,
+      #000 2px,
+      #000 4px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0,
+      transparent 2px,
+      #808080 2px,
+      #808080 4px
+    );
+}
+
+.overflow-auto::-webkit-scrollbar-corner {
+  background: #bfbfbf;
+  border: 1px solid #000;
+  box-shadow:
+    inset 1px 1px 0 #fff,
+    inset -1px -1px 0 #808080;
 }

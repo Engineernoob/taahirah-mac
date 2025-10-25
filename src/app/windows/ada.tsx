@@ -2,47 +2,48 @@
 
 export default function AdaWindow() {
   return (
-    <div className="p-4">
-      <h2 className="text-lg font-bold mb-4">Ada – Local AI Assistant</h2>
-      <div className="space-y-3 text-sm">
-        <p className="font-bold">
-          Personal LLM assistant with offline voice input and contextual memory
+    <div
+      className="p-3 text-[12px] leading-3.5 text-black bg-[#E5E5E5]"
+      style={{ fontFamily: "Chicago, sans-serif" }}
+    >
+      <div className="border border-black p-2 mb-2 bg-white">
+        <h2 className="font-bold text-center mb-1">Ada – Local AI Assistant</h2>
+        <p>
+          Ada is your on-device companion designed for privacy, speed, and intelligence.
+          It provides offline AI interaction and remembers your preferences without sending data anywhere.
         </p>
+      </div>
 
-        <div className="bg-gray-100 p-3 border border-black">
-          <p className="mb-2">
-            🤖 <span className="font-bold">AI Capabilities:</span>
-          </p>
-          <ul className="list-disc list-inside space-y-1 text-xs">
-            <li>100% offline processing</li>
-            <li>Voice input with Whisper.cpp</li>
-            <li>Contextual conversation memory</li>
-            <li>Multi-turn dialogues</li>
-            <li>Personal knowledge integration</li>
-          </ul>
-        </div>
+      <div className="border border-black p-2 mb-2 bg-white">
+        <p className="font-bold underline mb-1">AI Capabilities</p>
+        <ul className="list-disc list-inside">
+          <li>Offline conversation engine</li>
+          <li>Voice input via Whisper.cpp</li>
+          <li>Persistent contextual memory</li>
+          <li>Real-time streaming responses</li>
+          <li>Multi-turn dialogue handling</li>
+        </ul>
+      </div>
 
-        <div>
-          <p className="font-bold mb-1">🔧 Technical Stack</p>
-          <div className="bg-gray-100 p-2 border border-black text-xs">
-            <p>• Speech: Whisper.cpp for offline transcription</p>
-            <p>• Models: Ollama integration (LLaMA, Mistral)</p>
-            <p>• Memory: Vector database with Pinecone local</p>
-            <p>• API: Next.js API routes middleware</p>
-            <p>• Streaming: Real-time response generation</p>
-          </div>
-        </div>
+      <div className="border border-black p-2 mb-2 bg-white">
+        <p className="font-bold underline mb-1">Technical Stack</p>
+        <ul className="list-disc list-inside">
+          <li>Ollama LLM backend (LLaMA / Mistral)</li>
+          <li>Next.js API middleware integration</li>
+          <li>Local vector memory for recall</li>
+          <li>Whisper.cpp voice transcription</li>
+          <li>Lightweight UI rendered in React</li>
+        </ul>
+      </div>
 
-        <div>
-          <p className="font-bold mb-1">💾 Memory System</p>
-          <ul className="list-disc list-inside space-y-1 text-xs">
-            <li>Long-term conversation history</li>
-            <li>Document context retention</li>
-            <li>Personal preferences learning</li>
-            <li>Conversation summarization</li>
-            <li>Memory pruning and optimization</li>
-          </ul>
-        </div>
+      <div className="border border-black p-2 bg-white">
+        <p className="font-bold underline mb-1">Memory System</p>
+        <ul className="list-disc list-inside">
+          <li>Stores personal conversation context</li>
+          <li>Supports document recall and summary</li>
+          <li>Adaptive learning from interaction</li>
+          <li>Offline pruning and optimization</li>
+        </ul>
       </div>
     </div>
   );
